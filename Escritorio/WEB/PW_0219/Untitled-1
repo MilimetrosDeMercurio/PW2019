@@ -1,0 +1,11 @@
+EL archivo con extensión .html, directamente se me abre en el navegador
+El archivo .txt, me abre directamente en en editor de textos
+EL archivo .js de igual forma directamente en el editor de texto
+
+No pude eliminar el archivo "hola.html", debido a que no tengo el permiso, por el momento mi única acción es solo ver.
+
+Colocando el permiso 777, ya me deja lectura, escritura y ejecucion del archivo.
+
+La primera es una ruta absoluta y esa nos conviene cuando queremos apuntar archivos o librerias en especifico, es decir para poder acceder directamente a algo en especifico.
+
+La segunda es una ruta relativa, se nos es mas conveniente cuando queremos tener el manejo de carpetas y de igual forma no nos perderiamos el acceso .

@@ -1,0 +1,31 @@
+body{
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center; 
+}
+
+h1{
+    background: black;
+    color: red;
+}
+
+.Importante{
+    color: brown;
+}
+
+
+h2{
+    background: greenyellow;
+}
+
+/*Combinador de hermanos adyacentes: El aperador "+" selecciona hermanos adyacentes; Esto significa el segundo elemento que sigue directamente al primero, y ambos comparten el mismo padre.*/
+h1 + p{
+    border: 1px black solid;
+}
+
+
+/*Selector de hijos directos: El operador ">" selecciona a todos los hijos directos de un mismo tipo dentro de un elemento.*/
+
+h1  p{
+    border-bottom:2px dotted purple;
+}

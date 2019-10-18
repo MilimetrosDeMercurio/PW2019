@@ -1,0 +1,74 @@
+﻿--EJERCICIO 1
+select m.dui, m.nombre, sp.año
+from miembro m, superpachanga sp
+where sp.año = '2018';
+
+--EJERCICIO 2
+select denominacion, monto_acumulado
+from proyecto
+where monto_acumulado = (select MAX(monto_acumulado) from proyecto);
+
+--EJERCICIO 2.1
+select denominacion, monto_acumulado
+from proyecto
+where monto_acumulado = (select MIN(monto_acumulado) from proyecto);
+
+--EJECRICIO 3 
+
+select DISTINCT date_part('year',implantacion_fecha_inicio) fechita, sum(implantacion_precio)
+from contrata
+group by fechita
+
+--ejercicio4
+select c.dui, c.denominacion, c.tipo, sum(ct.implantacion_precio) 
+from cliente c , contrata ct
+where c.dui = dt.dui_cliente
+group by c.dui, c.denominacion , c.tipo
+
+--EJERCICIO 5
+select tipo, sum(monto_acumulado) monto
+from proyecto 
+group by tipo
+
+--ejercicio 6
+select tipo, sum(monto_acumulado) monto
+from proyecto 
+group by tipo
+having sum(monto_acumulado ::numeric) > 100000
+
+--EJERCICIO 7
+select p.denominacion, sp.nombre
+from proyecto p inner join presenta ps
+on p.codigo = ps.codigo_proyecto
+left outer join  superpachanga sp
+on ps.nombre_superpachanga = sp.nombre
+
+--EJERCICIO 8
+select p.denominacion, vp.numero from proyecto p, version vp
+where vp.numero > 1.0
+
+--EJERCICIO 9
+select macro.codigo, macro.denominacion from proyecto p, proyecto_parte pp, proyecto macro
+where p.codigo = pp.codigo_subproyecto
+and macro.codigo = pp.codigo_macroproyecto
+and p.denominacion = 'aulavirt'
+
+--EJERCICIO 10
+
+select codigo,denominacion
+from proyecto
+where codigo in (
+  WITH RECURSIVE subproyectos(codigo_sub) AS (
+    SELECT codigo_macroproyecto
+    FROM proyecto,proyecto_parte 
+    WHERE codigo_subproyecto=codigo and denominacion = 'aulavirt'
+  UNION ALL
+    SELECT pp.codigo_macroproyecto
+    FROM subproyectos sub, proyecto_parte pp
+    WHERE pp.codigo_subproyecto = sub.codigo_sub 
+     
+  )
+  SELECT codigo_sub
+  FROM subproyectos
+)
+order by codigo;

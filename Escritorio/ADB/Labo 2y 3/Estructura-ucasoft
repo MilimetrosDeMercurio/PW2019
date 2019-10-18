@@ -1,0 +1,287 @@
+﻿
+
+drop table if exists proyecto cascade;
+
+create table proyecto(
+codigo varchar(50) not null,
+denominacion varchar(30),
+tipo varchar(30),
+desc_txt bytea,
+desc_doc varchar(30),
+monto_acumulado int,
+url varchar(50),
+
+constraint pk_id_proyecto primary key(codigo)
+
+);
+
+drop table if exists cliente cascade;
+
+create table cliente(
+dui varchar(30) not null,
+denominacion varchar(50),
+tipo varchar(50),
+
+constraint pk_id_cliente primary key(dui)
+
+);
+
+drop table if exists departamento cascade;
+
+create table departamento(
+denominacion varchar(50) not null,
+dui_miembro_representante varchar(30),
+
+constraint pk_id_denominacion primary key(denominacion)
+
+
+
+);
+
+drop table if exists version cascade;
+
+create table version(
+codigo_proyecto varchar(50) not null,
+numero numeric(4,2),
+descripcion varchar(50),
+
+constraint pk_id_version_proyecto primary key(codigo_proyecto,numero),
+
+constraint fk_proyecto_codigo foreign key (codigo_proyecto) references proyecto (codigo)
+on delete cascade on update cascade
+
+
+
+);
+
+drop table if exists superpachanga cascade;
+
+create table superpachanga(
+nombre varchar(50) not null ,
+lema varchar(50),
+año varchar(50),
+
+constraint pk_id_superpachanga primary key(nombre)
+
+);
+
+drop table if exists miembro cascade;
+
+create table miembro(
+dui varchar(30) not null,
+nombre varchar(50),
+denominacion_departamento varchar(50),
+
+constraint pk_id_miembro primary key(dui),
+
+constraint fk_miembro_departamento foreign key (denominacion_departamento) references 
+departamento (denominacion) on delete cascade on update cascade deferrable
+
+);
+
+alter table departamento add constraint fk_id_departamento foreign key(dui_miembro_representante) references miembro (dui)
+on delete cascade on update cascade;
+
+drop table if exists asiste cascade;
+
+create table asiste(
+nombre_superpachanga varchar(50) not null,
+dui_miembro varchar(30) not null,
+
+constraint pk_id_asiste primary key(nombre_superpachanga, dui_miembro),
+
+constraint fk_super_pachanga_nombre foreign key (nombre_superpachanga) references superpachanga
+(nombre) on delete cascade on update cascade,
+
+constraint fk_miembro_dui foreign key (dui_miembro) references miembro (dui)
+on delete cascade on update cascade
+
+);
+
+drop table if exists proyecto_parte;
+
+create table proyecto_parte(
+codigo_macroproyecto varchar(50) not null,
+codigo_subproyecto varchar(50) not null,
+
+constraint pk_id_proyecto_parte primary key(codigo_macroproyecto, codigo_subproyecto),
+
+constraint fk_proyecto_codigo_macro foreign key (codigo_macroproyecto) references proyecto (codigo)
+on delete cascade on update cascade,
+
+constraint fk_proyecto_codigo_sub foreign key (codigo_subproyecto) references proyecto (codigo)
+on delete cascade on update cascade
+
+
+);
+
+drop table if exists presenta;
+
+create table presenta(
+codigo_proyecto varchar(50) not null,
+nombre_superpachanga varchar(40) not null,
+dui_miembro varchar(30) not null,
+
+constraint pk_id_presenta primary key(codigo_proyecto, nombre_superpachanga),
+
+constraint fk_proyecto_codigo foreign key (codigo_proyecto) references proyecto (codigo)
+on delete cascade on update cascade,
+
+constraint fk_super_pachanga_nombre foreign key (nombre_superpachanga) references superpachanga (nombre)
+on delete cascade on update cascade,
+
+constraint fk_miembro_dui foreign key (dui_miembro) references miembro (dui) 
+on delete cascade on update cascade
+
+);
+
+drop table if exists web cascade;
+
+create table web(
+codigo_proyecto varchar(50) not null,
+url varchar(50),
+num_tablas integer,
+num_pantallas integer,
+
+constraint pk_id_web primary key(codigo_proyecto),
+
+constraint fk_proyecto_codigo foreign key (codigo_proyecto) references proyecto (codigo)
+on delete cascade on update cascade
+
+)INHERITS (proyecto);
+
+drop table if exists venta_almacen cascade;
+
+create table venta_almacen(
+codigo_proyecto varchar(50) not null,
+num_clientes integer,
+
+constraint pk_id_venta_almacen primary key(codigo_proyecto),
+
+constraint fk_proyecto_codigo foreign key (codigo_proyecto) references proyecto (codigo)
+on delete cascade on update cascade
+
+)INHERITS (proyecto);
+
+drop table if exists erp cascade;
+
+create table erp(
+codigo_proyecto varchar(50) not null,
+
+constraint pk_id_erp primary key(codigo_proyecto),
+
+constraint fk_proyecto_codigo foreign key (codigo_proyecto) references proyecto (codigo)
+on delete cascade on update cascade
+
+)INHERITS (proyecto);
+
+drop table if exists ingenieria cascade;
+
+create table ingenieria(
+dui_miembro varchar(30) not null,
+
+constraint pk_id_ingenieria primary key(dui_miembro),
+
+constraint fk_miembro_dui foreign key (dui_miembro) references miembro (dui)
+on delete cascade on update cascade
+
+);
+
+drop table if exists gestion cascade;
+
+create table gestion(
+dui_miembro varchar(30) not null,
+
+constraint pk_id_gestion primary key(dui_miembro),
+
+constraint fk_miembro_dui foreign key (dui_miembro) references miembro (dui)
+on delete cascade on update cascade
+
+);
+
+drop table if exists ventas cascade;
+
+create table ventas(
+dui_miembro varchar(30) not null,
+
+constraint pk_id_ventas primary key(dui_miembro),
+
+constraint fk_miembro_dui foreign key (dui_miembro) references miembro (dui)
+on delete cascade on update cascade
+
+);
+
+drop table if exists desarrolla cascade;
+
+create table desarrolla(
+codigo_proyecto varchar(50) not null,
+dui_miembro_ingenieria varchar(30) not null,
+labor varchar(50),
+
+constraint fk_desarrolla_proyecto foreign key(codigo_proyecto) references proyecto (codigo)
+on delete cascade on update cascade,
+
+constraint fk_desarrolla_miembro_ingenieria foreign key(dui_miembro_ingenieria) references ingenieria (dui_miembro)
+on delete cascade on update cascade
+
+);
+
+drop table if exists modulo_erp cascade;
+
+create table modulo_erp(
+codigo_proyecto_erp varchar(50) not null,
+numero integer not null, 
+descripcion varchar(50) not null,
+
+constraint pk_modulo_erp primary key(codigo_proyecto_erp, numero, descripcion),
+
+constraint fk_id_modulo_erp foreign key(codigo_proyecto_erp) references proyecto (codigo)
+on delete cascade on update cascade
+
+
+);
+
+drop table if exists contrata cascade;
+
+create table contrata(
+codigo_proyecto varchar(50) not null,
+dui_cliente varchar(30) not null,
+dui_miembro_gestion varchar(30),
+descuento smallint,
+implantacion_fecha_inicio date,
+implantacion_precio money,
+mantenimiento_periocidad varchar(50),
+mantenimiento_precio integer,
+
+
+constraint pk_id_contrata primary key(codigo_proyecto, dui_cliente),
+
+
+constraint fk_contrata_proyecto_codigo foreign key (codigo_proyecto) references proyecto (codigo)
+on delete cascade on update cascade,
+
+constraint fk_contrata_cliente_dui foreign key (dui_cliente) references cliente (dui)
+on delete cascade on update cascade,
+
+constraint fk_miembro_gestion_dui foreign key (dui_miembro_gestion) references gestion (dui_miembro)
+on delete cascade on update cascade
+
+);
+
+drop table if exists atiende cascade;
+
+create table atiende(
+codigo_proyecto varchar(50) not null,
+dui_cliente varchar(30) not null,
+dui_miembro_ventas varchar(30) not null,
+
+constraint fk_atiende_proyecto foreign key (codigo_proyecto) references proyecto (codigo)
+on delete cascade on update cascade,
+
+constraint fk_atiende_cliente foreign key (dui_cliente) references cliente (dui) 
+on delete cascade on update cascade,
+
+constraint fk_atiende foreign key (dui_miembro_ventas) references ventas (dui_miembro)
+on delete cascade on update cascade
+
+);

@@ -1,0 +1,43 @@
+insert into alumno values(12345-5, margarita,15, 2015 );
+insert into alumno values(12345-6, margarita,14, 2013 );
+insert into alumno values(12345-7, margarita,15, 2014 );
+insert into alumno values(12345-8, margarita,17, 2016 );
+
+insert into carrera values(ING-234, ingenieria informatica);
+insert into carrera values(ING-234, ingenieria civil);
+insert into carrera values(ING-234, ingenieria mecanica);
+insert into carrera values(ING-234, ingenieria industrial);
+
+
+insert into subvencion values(123,50, "es pobre");
+insert into subvencion values(124,75, "es muy pobre");
+insert into subvencion values(125,10, "es acabado");
+insert into subvencion values(127,75, "es hijo del director");
+
+
+insert into annio values(2010);
+insert into annio values(2011);
+insert into annio values(2012);
+insert into annio values(2013);
+insert into annio values(2014);
+
+
+insert into otorga values(12345-5,123,2015);
+insert into otorga values(12346-5,124,2013);
+insert into otorga values(12347-5,125,2014);
+insert into otorga values(12348-5,127,2016);
+ -------------------------consultas ----------------------- 
+
+1) todos los alumnos 
+select * from alumnos;
+
+2)todas las carreras
+select * from carreras
+
+3)todas las subvenciones
+select * from subvenciones 
+
+4)datos tabla otorga
+select * from otorga;
+
+5)

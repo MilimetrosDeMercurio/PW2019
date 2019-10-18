@@ -1,0 +1,82 @@
+Alumno (nie, nombre, edad, anio_ingreso)
+
+Susbvencion (codigo_susb, Porcentaje_descuento, descripcion)
+
+Anio (id_num_anio)
+
+Docente (id_docente, nombre, imparte_materia)
+
+Profesor (id_docente, anio_graduacion)
+
+Estudiante_Docente (id_docente, nombre, fecha_nac, datos_fisiologicos)
+
+Seccion (id_nivel, letra, num_grado) 
+
+Pago (denominacion_pago, tipo, numero) 
+
+Responsable (id_responsable, nombre, cargo)
+
+Bitacora (nie, correlativo, fecha_hora, tipo, comentario)
+
+Edificio (denominacion_edificio, nombre)
+
+Empleado (id_responsable, oficio, telefono_uca)
+
+Estudiante_Responsable (id_responsable, carrera)
+
+Asignatura (codigo_asignatura, nombre)
+
+Nivel (id_nivel)
+
+
+Grado (id_nivel, num_grado)
+
+Seccion (id_nivel, letra, num_grado)
+
+Semestre (denominacion_semestre, id_num_anio)
+
+Aula (denominacion_edificio, espacios)
+
+Lab_/_cc (denominacion_edificio, num_aula)
+
+Clase (denominacion_edificio, num_aula) 
+
+
+
+--CREANDO TABLAS
+
+create table alumno(
+	nie varchar(20) not null,
+	nombre varchar(100),
+	edad integer,
+	anio_ingreso smallint
+);
+
+create table susbvencion(
+	codigo_susb varchar(50) not null,
+	porcentaje_descuento numeric,
+	descripcion varchar(100)
+);
+
+create table anio(
+	id_num_anio varchar(30) not null
+);
+
+create table docente(
+	id_docente varchar(30) not null,
+	nombre varchar(100),
+	imparte_materia varchar(30)
+);
+
+create table profesor(
+	id_docente varchar(30) not null,
+	anio_graduacion smallint
+);
+
+create table estudiante_docente(
+	id_docente varchar(30) not null,
+	nombre varchar(100),
+	fecha_nac smallint,
+	datos_fisiologicos varchar(50)
+);
+

@@ -1,0 +1,16 @@
+﻿--EJERCICIO 1
+select m.dui, m.nombre, sp.año
+from miembro m, superpachanga sp
+where sp.año = '2018';
+
+--EJERCICIO 2
+select denominacion, monto_acumulado
+from proyecto
+where monto_acumulado = (select MAX(monto_acumulado) from proyecto);
+
+--EJERCICIO 2.1
+select denominacion, monto_acumulado
+from proyecto
+where monto_acumulado = (select MIN(monto_acumulado) from proyecto);
+
+
